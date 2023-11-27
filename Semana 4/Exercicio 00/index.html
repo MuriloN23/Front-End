@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  
+  <title>Gerenciador de Tarefas</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    h1 {
+      color: #585858;
+    }
+
+    form {
+      margin-bottom: 20px;
+    }
+
+    label {
+      margin-right: 10px;
+    }
+
+    input[type="text"] {
+      padding: 5px;
+      font-size: 16px;
+    }
+
+    button {
+      padding: 8px 12px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    li {
+      background-color: #fff;
+      border: 1px solid #ddd;
+      margin-bottom: 5px;
+      padding: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    li:hover {
+      background-color: #f0f0f0;
+    }
+
+    li button {
+      background-color: #e74c3c;
+      color: #fff;
+      border: none;
+      padding: 5px 8px;
+      margin-left: 5px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>Gerenciador de Tarefas</h1>
+  
+  <form id="formTarefa">
+    <label for="tarefa">Tarefa:</label>
+    <input type="text" id="tarefa" required>
+    <button type="button" onclick="adicionarTarefa()">Adicionar Tarefa</button>
+  </form>
+  
+  <ul id="listaTarefas"></ul>
+
+  <script>
+    class Tarefa {
+      constructor(nome) {
+        this.nome = nome;
+      }
+    }
+
+    function adicionaTarefaDOM(tarefa) {
+      const listaTarefas = document.getElementById('listaTarefas');
+      const novaTarefa = document.createElement('li');
+      novaTarefa.textContent = tarefa.nome;
+
+      const botaoExcluir = document.createElement('button');
+      botaoExcluir.textContent = 'Excluir';
+      botaoExcluir.addEventListener('click', () => excluirTarefa(tarefa));
+
+      novaTarefa.appendChild(botaoExcluir);
+      listaTarefas.appendChild(novaTarefa);
+    }
+
+    function adicionaTarefaNoStorage(tarefa) {
+      let tarefas = JSON.parse(localStorage.getItem('tarefas')) || [];
+      tarefas.push(tarefa);
+      localStorage.setItem('tarefas', JSON.stringify(tarefas));
+    }
+
+    function carregaTarefasDoStorage() {
+      const listaTarefas = document.getElementById('listaTarefas');
+      const tarefas = JSON.parse(localStorage.getItem('tarefas')) || [];
+
+      tarefas.forEach(tarefa => {
+        adicionaTarefaDOM(tarefa);
+      });
+    }
+
+    function adicionarTarefa() {
+      const inputTarefa = document.getElementById('tarefa');
+      const nomeTarefa = inputTarefa.value;
+
+      if (nomeTarefa.trim() === '') {
+        alert('Digite uma tarefa válida');
+        return;
+      }
+
+      const novaTarefa = new Tarefa(nomeTarefa);
+      adicionaTarefaDOM(novaTarefa);
+      adicionaTarefaNoStorage(novaTarefa);
+
+      inputTarefa.value = '';
+    }
+
+    function excluirTarefa(tarefa) {
+      const tarefas = JSON.parse(localStorage.getItem('tarefas')) || [];
+      const index = tarefas.findIndex(item => item.nome === tarefa.nome);
+
+      if (index !== -1) {
+        tarefas.splice(index, 1);
+        localStorage.setItem('tarefas', JSON.stringify(tarefas));
+        atualizaListaTarefas();
+      }
+    }
+
+    function atualizaListaTarefas() {
+      const listaTarefas = document.getElementById('listaTarefas');
+      listaTarefas.innerHTML = ''; 
+
+      carregaTarefasDoStorage();
+    }
+
+    carregaTarefasDoStorage();
+  </script>
+</body>
+</html>
