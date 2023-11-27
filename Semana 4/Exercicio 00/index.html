@@ -58,10 +58,12 @@
       align-items: center;
     }
 
+    /* Hover effect on tasks */
     li:hover {
       background-color: #f0f0f0;
     }
 
+    /* Button inside task item */
     li button {
       background-color: #e74c3c;
       color: #fff;
@@ -147,7 +149,7 @@
 
     function atualizaListaTarefas() {
       const listaTarefas = document.getElementById('listaTarefas');
-      listaTarefas.innerHTML = ''; 
+      listaTarefas.innerHTML = ''; // Limpa a lista
 
       carregaTarefasDoStorage();
     }
