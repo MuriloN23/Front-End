@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style2.css">
+
+    <title>Agência de Turismo</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="elementos">
+            <!-- Conteúdo anterior com os pacotes turísticos -->
+        </div>
+        <hr>
+        <div class="formulario">
+            <h2>Adicionar Novo Pacote Turístico</h2>
+            <form id="formularioViagem">
+                <label for="cidade">Cidade:</label>
+                <input type="text" id="cidade" name="cidade" required>
+
+                <label for="detalhes">Detalhes:</label>
+                <textarea id="detalhes" name="detalhes" required></textarea>
+
+                <label for="preco">Preço:</label>
+                <input type="text" id="preco" name="preco" required>
+
+                <label for="imagemURL">URL da Imagem:</label>
+                <input type="text" id="imagemURL" name="imagemURL" required>
+
+                <button type="button" onclick="inserirDestino()">Inserir</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="container destinos" id="destinosContainer">
+        <!-- Destinos serão adicionados aqui via JavaScript -->
+    </div>
+
+    <script src="script2.js"></script>
+</body>
+</html>
